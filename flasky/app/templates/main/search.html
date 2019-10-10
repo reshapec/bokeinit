@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
+<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
+
+{% block title %}Python自习室 - 搜索{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1 style="font-color=grey"><small>搜索</small></h1>
+    </div>
+    <div class="col-md-4">
+        <form action="" method="post" enctype=multipart/form-data>
+            <input type="text" name="searchwords" class="form-control" placeholder="请输入关键字"><br />
+            <input type="submit" value="submit">
+        </form>
+    </div>
+{% endblock %}
+

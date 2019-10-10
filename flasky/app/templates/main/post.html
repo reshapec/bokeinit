@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "main/_macros.html" as macros %}
+
+{% block title %}Python自习室 - 查评{% endblock %}
+
+{% block page_content %}
+    
+    <!-- 导入渲染博客文章列表的局部模板 -->
+    {% include 'main/_posts.html' %}
+    
+    <!-- 滚动条的初始位置被设为"{{ num }}条评论"区域 -->
+    <h4 id="comments"><small>{{ num }}条评论</small></h4>
+
+    <!--导入渲染文章评论列表的局部模板 越先发表评论的评论越靠前(按时间戳顺序排列)-->
+    {% include 'main/_comments.html' %}
+    
+    <!-- 分页对象存在的情况下，调用分页宏 -->
+    {% if pagination %}
+        <div class="pagination">
+        {{ macros.pagination_widget(pagination, 'main.post', fragment='#comments', id=posts[0].id) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+<!-- Flask-PageDown模板声明 -->
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

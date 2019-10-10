@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
+<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
+
+{% block title %}Python自习室 - 回复{% endblock %}
+
+{% block page_content %}
+
+<!-- 导入渲染评论回复列表的局部模板 -->
+{% include 'main/_replys.html' %}
+
+{% endblock %}
+

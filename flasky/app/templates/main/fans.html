@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% import "main/_macros.html" as macros %}
+
+{% block title %}Python自习室 - {{ user.username }}的{{ title }} {% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+   <h4><small>他的{{ title }}</small></h4>
+</div>
+
+<!-- 两列表格， 左边一列显示粉丝的用户名和头像，右边一列显示时间戳 -->
+<table class="table table-hover faners">
+   <!-- 页眉使用<thead>标签进行定义，表格的表头使用<th>标签进行定义 -->
+   <thead><tr><th class="fancy">User</th><th class="fancy">Since</th></tr></thead>
+
+    {% for fan in fans %}
+    {% if fan.user != user %}<!-- 不在粉丝队伍显示自己 -->
+   <tr>
+       <td class="orange">
+           <a class="status" href="{{ url_for('main.user', username = fan.user.username) }}">
+               <img class="img-rounded" src="{{ url_for('static', filename=fan.user.avatar_hash_2) }}" alt="头像">
+                {{ fan.user.username }}
+           </a>
+       </td>
+       <td class="orange">{{ moment(fan.timestamp).format('L') }}</td>
+   </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, endpoint, username = user.username) }}
+</div>
+
+{% endblock %}
+
+<!--
+表格由<table>标签来定义, 
+每个表格均有若干行(由<tr>标签定义)，
+表格的表头使用<th>标签进行定义 ，
+每行被分割为若干单元格(由<td>标签定义), 字母td指表格数据(table data)，即数据单元格的内容. 数据单元格可以包含文本、图片、列表、段落、表单、水平线、表格等等
+
+示例：
+<table border="1">
+  <tr>
+    <th>Heading</th>
+    <th>Another Heading</th>
+  </tr>
+  <tr>
+    <td>row 1, cell 1</td>
+    <td>row 1, cell 2</td>
+  </tr>
+  <tr>
+    <td>row 2, cell 1</td>
+    <td>row 2, cell 2</td>
+  </tr>
+</table>
+
+在浏览器显示如下：
+Heading	        Another Heading
+row 1, cell 1	row 1, cell 2
+row 2, cell 1	row 2, cell 2
+-->
+
+<!--
+
+表格	      描述
+<table>	      定义表格
+<caption>     定义表格标题
+<th>	      定义表格的表头单元格
+<tr>	      定义表格的行
+<td>	      定义表格单元
+<thead>	      定义表格的页眉(定义表格中的表头内容)
+<tbody>	      定义表格的主体
+<tfoot>	      定义表格的页脚
+<col>	      定义用于表格列的属性
+<colgroup>    定义表格列的组
+
+-->

@@ -1,0 +1,151 @@
+<!-- 二级基模板，继承至bootstrap/base.html(Flask-Bootstrap的基模板提供网页骨架，引入Bootstrap的所有CSS和Javascript文件)，是本项目中其他衍生模板的基模板 -->
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Python自习室{% endblock %}
+
+{% block head %}
+<!-- 为保留bootstrap/base.html基模板head区块里的原始内容，调用super() -->
+{{ super() }}
+<!-- 定义收藏夹图标 -->
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<!-- 使用<link>标签链接到外部样式表，<link>标签在(文档)头部, 浏览器会从文件styles.css中读到样式声明，并根据它来格式文档 -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/iconfont.css') }}">
+<!-- 链接外部js -->
+<script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+{% endblock %}
+
+<!-- 用户定义的导航栏 -->
+{% block navbar %}
+<!-- 添加nav-bar样式类，表示这里面属于导航条 -->
+<div class="navbar navbar-default navbar-static-top" role="navigation"> 
+    <div class="container">
+        
+        <!-- 增加header, 导航条组件包裹切换按钮和站标 -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+             data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='favicon.ico') }}"/></a>
+        </div>
+
+        <!-- 设置div元素为导航条组件各列表项的父元素 -->
+        <div class="navbar-collapse collapse">
+            <!-- 设置ul元素为导航条组件中的列表元素-->
+            <ul class="nav navbar-nav">
+
+                <!-- 在导航条中加入首页链接 -->
+                <li><a href="/"><span class="iconfont">&#xe60d;</span>首页</a></li>
+
+                <!-- 在导航条中加入管理评论链接 -->
+                {% if current_user.can(Permission.MODERATE) %}
+                    <li><a href="{{ url_for('main.moderate') }}">管理评论</a></li>
+                {% endif %}
+
+                <!--在导航条中加入论坛链接，下拉菜单功能的实现-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                     论坛<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.video') }}">视频(relax)</a></li>
+                        <li><a href="{{ url_for('main.display_document') }}">资料(study)</a></li>
+                    </ul>
+                </li>
+                
+                <!-- 在导航条中加入搜索链接 -->
+                <li><a href="{{ url_for('main.search') }}"><span class="iconfont like">&#xe62b;</span>搜索</a></li>
+            </ul>
+
+            <!-- 表单 
+            <form action="" method="post" enctype=multipart/form-data class="navbar-form navbar-left"> 
+              <div class="form-group">
+                <input type="text" name="searchwords" class="form-control" placeholder="关键字">
+              </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form> -->
+
+            <ul class="nav navbar-nav navbar-right"> <!--设置导航条内元素右对齐-->
+              
+              <!-- 判断条件中的变量current_user由Flask-Login定义，在视图函数和模板中自动可用，这个变量的值是
+                   当前登录的用户, 是用户的上下文代理对象 -->
+              <!-- 如果当前登录的用户提供的登录凭据有效，展示“写博客”和“权限操作”-->
+              {% if current_user.is_authenticated %}
+                  <!-- 在导航条中加入写博客链接 -->
+                  <li><a href="{{ url_for('main.write_post') }}">
+                    <span class="iconfont like">&#xe607;</span>写博客</a>
+                  </li>
+
+                  <!--在导航条中加入权限操作链接, 下拉菜单功能的实现-->
+                  <li class="dropdown"> 
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                      aria-haspopup="true" aria-expanded="false">
+                      <img class="img-circle" src="{{ url_for('static',    
+                      filename=current_user.avatar_hash_2) }}" alt="头像"/><span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        
+                        <li><a href="{{ url_for('main.user', username=current_user.username)}}">
+                        <span class="iconfont like">&#xe659;</span> 个人中心</a></li>
+                       
+                        <li><a href="{{ url_for('auth.change_email_request') }}">
+                        <span class="iconfont like">&#xe642;</span> 修改email</a></li>
+
+                        <li><a href="{{ url_for('auth.change_password') }}">
+                        <span class="iconfont like">&#xe7dc;</span> 修改密码</a></li>
+                       
+                        <li><a href="{{ url_for('auth.logout') }}">
+                        <span class="iconfont like">&#xe64b;</span> 退出</a></li> 
+                        
+                    </ul>
+
+                  </li>
+              <!-- 向游客展示“登录”和“注册” -->
+              {% else %}
+                  <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+                  <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+              {% endif %}
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+<!-- 用户定义的页面内容 -->
+{% block content %}
+<div class="container">
+
+    <!-- Flask把get_flashed_messages()函数开放给模板，用于获取并渲染闪现消息 -->
+    <!-- 使用循环，后端每次调用flash()都会生成一个消息，所以可能有多个消息在排队等待显示 -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>{{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- 名为page_content的新的空区块，区块中的内容由本项目中其他衍生模板定义-->
+    {% block page_content %}{% endblock %}
+
+</div>
+{% endblock %}
+
+<!-- 在二级基模板的scripts区块中引入Moment.js库 -->
+<!-- 文档底部的JavaScript声明 -->
+{% block scripts %}
+<!-- 为保留bootstrap/base.html基模板scripts区块里的原始内容，调用super() -->
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.locale('zh-cn') }}
+{% endblock %}

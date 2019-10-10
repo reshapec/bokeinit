@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
+<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
+
+{% block title %}Python自习室 - 登录{% endblock %}
+
+{% block page_content %}
+
+    <div class="page-header">
+        <h1 style="color:grey;"><small>登录</small></h1>
+    </div>
+
+    <div>
+        {{ wtf.quick_form(form) }} 
+    <div>
+
+    <br /><br /><br />
+    <p>新用户?<a href="{{ url_for('auth.register') }}">注册</a></p>
+    <p>已创建账户?<a href="{{ url_for('auth.reset_password_request') }}">忘记密码</a></p>
+
+{% endblock %}
+

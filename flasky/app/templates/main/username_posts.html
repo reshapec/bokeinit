@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+{% import "main/_macros.html" as macros %}
+<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
+<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
+
+{% block title %}Python自习室 - 文章{% endblock %}
+
+{% block page_content %}
+    
+<h4><small>{{ num }}条文章</small><span class="iconfont">&#xe624;</span></h4>
+<br/>
+  
+<ul class="posts">
+    {% for post in posts %}
+    <li class="post">
+        
+        <!-- 用户头像部分 -->
+        <!-- 页面左侧显示作者的小头像; 并将头像渲染成链接，指向用户的资料页面 -->
+        <div class="profile-thumbnail">
+            
+            <a href="{{ url_for('main.user', username=post.author.username)}}">
+            
+                <img class="img-circle profile-thumbnail" src="{{ url_for('static', filename=post.author.avatar_hash_2) }}" alt="头像" />
+           
+            </a>
+            
+        </div>
+        
+        <!-- 将实体文字内容分为post-content-head和post-content-boby，单独设置post-content-boby中的鼠标悬停，不影响post-content-head中的锚链接功能 -->
+        <div class="post-content-head">
+
+            {% if post.top %}
+                <div class="post-top">
+                    <span class="iconfont">&#xe786;</span>
+                </div>
+            {% endif %}
+
+            <!-- 将作者的用户名渲染成链接，指向用户的资料页面-->
+            <div class="post-author">
+            <a href="{{ url_for('main.user', username=post.author.username)}}">
+            {{ post.author.username }}
+            </a>
+            </div>
+
+        </div>
+        
+        <div class="post-content-boby">
+            <!-- 在模板中使用文章内容的HTML格式-->
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+
+            <!-- 将距今日期向左浮动 -->
+            <div class="post-date1">
+                <small>{{ moment(post.timestamp).format('YYYY-MM-DD') }}</small>&nbsp;
+                
+            </div>
+
+
+            <!-- 页脚设置 -->
+            <div class="post-footer">
+
+                <!-- 共同权限: 查看、评论 -->
+                <a class="line" href="{{ url_for('main.post', id=post.id) }}">
+                查看</a>
+
+                <!--后接URL片段，点此链接直接跳转到post页面的评论区域,页中页-->
+                <!-- #comments后缀，针对post.html模板中的<h4>
+                     id="comments"><small>{{ num }}条评论</small></h4> -->
+                <a class="line" href="{{ url_for('main.post', id=post.id) }}#comments">{{ post.comments.count() }}评论</a>
+
+                <!-- 当前用户是文章作者时，所具备的权限 -->
+                {% if current_user == post.author %}
+                    <a class="line" href="{{ url_for('main.edit', 
+                    id=post.id) }}">编辑</a>
+
+                    {% if post.top %}
+                      <a class="line" href="{{ url_for('main.notop', 
+                      id=post.id, username=post.author.username) }}">取消置顶</a>
+                    {% else %}
+                      <a class="line" href="{{ url_for('main.istop', id=post.id, 
+                      username=post.author.username) }}">置顶</a>
+                    {% endif %}
+
+                    <a class="text-danger line" href="{{ url_for(
+                   'main.delete', username=post.author.username, id=post.id) }}"
+                    >删除</a>
+
+                <!-- 当前用户是管理员，管理员权限 -->
+                {% elif current_user.is_administrator() %}
+                <a class="text-warning line" href="{{ url_for('main.edit', 
+                    id=post.id) }}">编辑[Admin]</a>
+
+                    {% if post.top %}
+                      <a class="line" href="{{ url_for('main.notop', 
+                      id=post.id, username=post.author.username) }}">取消置顶</a>
+                    {% else %}
+                      <a class="line" href="{{ url_for('main.istop', id=post.id, 
+                      username=post.author.username) }}">置顶</a>
+                    {% endif %}
+
+                    <a class="text-danger line" href="{{ url_for('main.delete', 
+                        username=post.author.username, id=post.id) }}">删除</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </li>     
+    {% endfor %}
+  
+</ul>
+            
+    <div class="pagination">
+    {{ macros.pagination_widget(pagination, 'main.posts', username=user.username) }}
+    </div>
+
+{% endblock %}
+
+
+<!-- 在首页不显示页脚设置，在点击进入'xx的博客'后，渲染本页面，显示：查看、编辑、删除等操作链接 -->

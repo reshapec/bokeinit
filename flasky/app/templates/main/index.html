@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
+<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
+{% import "main/_macros.html" as macros %}
+
+<!-- 显示有博客文章的首页模板 -->
+{% block page_content %}
+<!--
+<div class="page-header">
+    <h2>Welcome, 
+    {% if current_user.is_authenticated %}
+    {{ current_user.username }}
+    {% else %}
+    Stranger
+    {% endif %}!</h2>
+</div>
+-->
+
+
+{% if current_user.is_authenticated %}
+    <h4><span class="iconfont">&#xe644;</span><small>博客圈</small></h4>
+    <!-- 在页面上部添加导航选项卡 -->
+    <div class="post-tabs">
+        <ul class="nav nav-tabs">
+            <li{% if not show_idols %} class="active"{% endif %}>
+                <a href="{{ url_for('main.show_all') }}">所有</a>
+            </li>
+            <li{% if show_idols %} class="active"{% endif %}>
+                <a href="{{ url_for('main.show_idols') }}">关注</a>
+            </li>
+        </ul>
+        {% include 'main/_posts.html' %}
+    </div>
+    
+    <!-- 添加分页导航 -->
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, 'main.index') }}
+    </div>
+
+{% else %}
+   
+    <p style="font-family:cursive">梦想有可能成为现实，生活正是因此而有趣</p>
+    
+    <div>
+        <img src="{{ url_for('static', filename='panda.png') }}" title="人生苦短,我学Python" />
+    </div><br /><br /><br />
+  
+{% endif %}
+
+<!-- 底部居中 -->
+<div class="footer">
+
+  <div class="container">
+
+    <p><small>&copy; 2019 &nbsp;<span class="iconfont">&#xe63a;</span> &nbsp; Shape</small></p>
+    <p><small><a href="#" target="_blank" rel="nofollow">苏ICP备20190917-1</a></small></p>
+    <!-- 不蒜子极简主义算法 -->
+    <span id="busuanzi_container_site_pv">
+      <small>本站总访问量<span class="line" id="busuanzi_value_site_pv"></span></small>&nbsp;
+    </span>
+    <span id="busuanzi_container_site_uv">
+      <small>本站访客数<span id="busuanzi_value_site_uv"></span></small>
+    </span>
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+<!-- Flask-PageDown模板声明 -->
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
+
+<!-- &nbsp;空格占位符 -->
+

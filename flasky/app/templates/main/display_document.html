@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Python自习室 - 资料{% endblock %}
+
+{% block page_content %}
+       <h5 style="font-family:arial;color:red;font-size:16px;">资料压缩为tar文件，下载后请解压缩</h5><br />
+       <!--
+       <ul type="circle"><strong>网页基础设计</strong>
+           <li>第01周ppt</li>
+           <a href="{{ url_for('main.download', filename='网页设计基础第01周ppt.tar.gz') }}">下载</a>
+           <li>第02周ppt</li>
+           <a href="{{ url_for('main.download', filename='网页设计基础第02周ppt.tar.gz') }}">下载</a>
+           <li>第03周ppt</li>
+           <a href="{{ url_for('main.download', filename='网页设计基础第03周ppt.tar.gz') }}">下载</a>
+           <li>第04周ppt</li>
+           <a href="{{ url_for('main.download', filename='网页设计基础第04周ppt.tar.gz') }}">下载</a>
+       </ul>
+       -->
+     
+       <!-- 表1 -->
+       <table width="240" border="3" frame="above">
+           <caption><strong>网页基础设计</strong></caption>
+           <tr>
+               <th align="left">周期课程</th>
+               <th align="right">操作</th>
+           </tr>
+           <tr>
+               <td align="left">第01周ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='网页设计基础第01周ppt.tar.gz') }}">下载</a></td>
+           </tr>
+           <tr>
+               <td align="left">第02周ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='网页设计基础第02周ppt.tar.gz') }}">下载</a></td>
+           </tr>
+           <tr>
+               <td align="left">第03周ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='网页设计基础第03周ppt.tar.gz') }}">下载</a></td>
+           </tr>
+           <tr>
+               <td align="left">第04周ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='网页设计基础第04周ppt.tar.gz') }}">下载</a></td>
+           </tr>
+       </table><br />
+       
+       <!-- 表2 -->
+       <table width="240" border="1" frame="above">
+       <caption><strong>Web前端</strong></caption>
+           <tr>
+               <th align="left">周期课程</th>
+               <th align="right">操作</th>
+           </tr>
+           <tr>
+               <td align="left">第01章ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='Web前端第1章ppt.tar.gz') }}">下载</a></td>
+           </tr>
+           <tr>
+               <td align="left">第02章ppt</td>
+               <td align="right"><a href="{{ url_for('main.download', filename='Web前端第2章ppt.tar.gz') }}">下载</a></td>
+           </tr>
+       </table>
+   
+{% endblock %}
+

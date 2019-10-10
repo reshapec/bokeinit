@@ -1,0 +1,13 @@
+
+<p>亲爱的 {{ user.username }},</p>
+<p>感谢加入<b>Python自习室</b>,点击以下链接完成安全验证！</p>
+<p><a href="{{ url_for('auth.confirm', token=token, _external=True) }}">点击这里</a></p>
+<p>或者，也可以在浏览器的地址栏中粘贴以下链接:</p>
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+<br>
+<p>在这里，可以记录自己学习的点点滴滴，与其他人交流进步，</p>
+<p>创建Python自习室是为了鼓励一路前行，不曾止步的人们。</p>
+<br>
+<p>再次感谢您的注册，预祝您在自习室有所收获！</p>
+<p><small>本邮件为系统自动发送，请勿回复，感谢使用自习室。</small></p>
+

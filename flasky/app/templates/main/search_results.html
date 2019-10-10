@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}  
+
+{% block title %}Python自习室  {% endblock %}
+
+{% block page_content %}
+    {% if status == "error" %}
+        <p>作者水平有限,并没有关于<font color="red"><b>"{{ keywords }}"</b></font>的内容,请换一个词试试
+        </p>
+    {% endif %}
+
+    {% if status == "success" %}
+        <p>关于<font color="red"><b>"{{ keywords }}"</b></font>的搜索结果一共有
+        <font color="red"><b>"{{ counts }}"</b></font>条</p>
+        
+    <ul class="posts">
+
+    {% for post in results %}
+    <li class="post">
+        
+        <!-- 用户头像部分 -->
+        <!-- 页面左侧显示作者的小头像; 并将头像渲染成链接，指向用户的资料页面 -->
+        <div class="profile-thumbnail">
+            <a href="{{ url_for('main.user', username=post.author.username)}}">
+                <img class="img-circle profile-thumbnail" src="{{ url_for
+                ('static', filename=post.author.avatar_hash_2) }}" alt="头像" />
+            </a>
+        </div>
+        
+        <!-- 实体文字内容部分 -->
+        <div class="post-content">
+            <div class="post-date"> 
+                <small>{{ moment(post.timestamp).format('MM-DD') }}</small>
+            </div>
+            
+            <!-- 将作者的用户名渲染成链接，指向用户的资料页面-->
+            <div class="post-author"> 
+                <a href="{{ url_for('main.user', 
+                username=post.author.username)}}">{{ post.author.username }}</a>
+            </div>
+
+            <!-- 在模板中使用文章内容的HTML格式-->
+            <div class="post-body">
+                {% if post.body_html %}
+                    {{ post.body_html | safe }}
+                {% else %}
+                    {{ post.body }}
+                {% endif %}
+            </div>
+           
+            <!-- 在页脚设置查看路径 -->
+            <div class="post-footer">
+                <a href="{{ url_for('main.post', id=post.id) }}">查看</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+    {% endif%}
+</ul>
+    
+{% endblock %}

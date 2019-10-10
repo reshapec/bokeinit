@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Python自习室 - 确认账户{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>
+        Hello, {{ current_user.username }}!
+    </h1>
+    <h3>您还没有确认您的帐户</h3>
+    <p>
+        在您进入这个网站之前，需要确认您的帐户; 请检查收件箱，应该已经收到一封带有确认链接的电子邮件。
+    </p>
+    <p>
+        需要另一封确认电邮?
+        <a href="{{ url_for('auth.resend_confirmation') }}">点击这里</a>
+    </p>
+</div>
+{% endblock %}
