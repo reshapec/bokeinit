@@ -9,11 +9,9 @@
     <h3>评论管理</h3>
 </div>
 
-<!-- moderate.html模板将渲染评论的工作交给_comments.html模板完成，但把控制权交给从属模板_comments.html之前，使用Jinja2提供的set指令定义一个模板变量moderate，并将其值设为True。这个变量moderate会用在_comments.html模板中，决定是否渲染评论管理功能。-->
 {% set moderate = True %}
 {% include 'main/_comments.html' %}
 
-<!-- 分页模板宏 -->
 {% if pagination %}
 <div class="pagination">
     {{ macros.pagination_widget(pagination, '.moderate') }}

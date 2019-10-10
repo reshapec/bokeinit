@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}  
-<!-- 用Bootstrap预定义表单样式渲染整个Flask-WTF表单 -->
-<!-- wtf.quick_form()函数的参数为Flask-WTF表单对象 -->
 
 {% block title %}Python自习室 - 视频{% endblock %}
 
@@ -55,21 +53,5 @@
         <div class="desc">第6集 乔治第一天上幼儿园</div>
     </div>
 
-{% endblock %}
-
-<!-- HTML5 使用 JavaScript 来存储和访问数据 -->
-<!-- HTML5 提供了两种在客户端存储数据的新方法：
-     localStorage - 没有时间限制的数据存储
-     sessionStorage - 针对一个 session 的数据存储-->
-<!-- 对用户访问页面的次数进行计数 -->
-{% block scripts %}
-{{ super() }}
-<script type="text/javascript">
-if (localStorage.pagecount)
-  {localStorage.pagecount=Number(localStorage.pagecount) +1;}
-else
-  {localStorage.pagecount=1;}
-document.write("A区受访次数: "+ localStorage.pagecount + "次");
-</script>
 {% endblock %}
 

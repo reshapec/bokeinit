@@ -8,55 +8,10 @@
     </div>
     <div class="col-md-4">
         <form action="" method="post" enctype="multipart/form-data">
-            <!--后台代码中获取文件是通过form的name来标识的-->
             <input type="file" name="file"><br />
             <input type="submit" value="upload">
         </form>
     </div>
 {% endblock %}
 
-<!-- 
-表单定义标记 <form> 的属性的列表
-属性	        描述
-accept-charset	规定在被提交表单中使用的字符集(默认：页面字符集）
-action	        规定向何处提交表单的地址(URL)(提交页面）
-autocomplete	规定浏览器应该自动完成表单(默认：开启)
-enctype	        规定被提交数据的编码(默认：url-encoded)
-method	        规定在提交表单时所用的HTTP方法(默认：GET）
-name	        规定识别表单的名称(对于DOM使用：document.forms.name）
-novalidate	规定浏览器不验证表单
-target	        规定action属性中地址的目标(默认：_self）
 
-
-输入标记 <input> 的属性的列表，定义输入控件
-属性        描述
-type        指定控件类型，默认值是text
-name        控件标识
-value       控件初始值
-maxlength   控件输入域中允许输入的最多字符数
-size        控件输入域的大小
-checked     提供复选框和单选按钮的初始状态
-
-
-输入标记 <input> 的属性type的属性值列表
-属性值 描述
-button      按钮，可以创建提交按钮、复位按钮和普通按钮
-text        文本框，接受任何形式的输入，如字母
-password    口令框，用*代替输入字符的显示
-checkbox    复选框，提供多项选择
-radio       单选按钮，提供单项选择
-submit      提交按钮，单击提交按钮，发送表单信息提交至服务器
-image       图像按钮，单击图像，发送表单信息提交至服务器
-reset       复位按钮，把表单上的组建值恢复为默认值
-hidden      隐藏表单组件，把表单中一个或多个组件隐藏起来
-textarea    多行文本框
-file        上传文件
--->
-
-
-<!-- 
-文件上传的基本原理：
-• 一个带有enctype=multipart/form-data的<form>标记，标记中含有一个<input type="file">
-• 应用通过请求对象的files字典来访问文件
-• 使用文件的save()方法把文件永久地保存在文件系统中
--->

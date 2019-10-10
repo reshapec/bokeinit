@@ -2,8 +2,7 @@
     {% for post in posts %}
     <li class="post">
         
-        <!-- 用户头像部分 -->
-        <!-- 页面左侧显示作者的小头像; 并将头像渲染成链接，指向用户的资料页面 -->
+      
         <div class="profile-thumbnail">
             <a href="{{ url_for('main.user', username=post.author.username)}}">
                 <img class="img-circle profile-thumbnail" src="{{ url_for
@@ -11,35 +10,35 @@
             </a>
         </div>
         
-        <!-- 实体文字内容部分 -->
+     
         <div class="post-content">
-            <div class="post-top"> <!-- 将单条博客的“赞取消”布置在博客右边上 -->
+            <div class="post-top">
               
-                <!-- 对博客点赞的链接 -->
+               
                 <a href="{{ url_for('main.zanpost', id=post.id) }}">
-                <span class="iconfont like">&#xe610;</span></a> <!-- 应用阿里点赞图标 -->
+                <span class="iconfont like">&#xe610;</span></a> 
 
-                <!-- 对博客的赞计数 -->
+               
                 {% if post.zans.count() == 0 %}
                     <span><small>赞取消</small></span>
                 {% else %}
                     {{ post.zans.count() }}
                 {% endif %}
 
-                <!-- 对博客取消点赞的链接 -->
+              
                 <a href="{{ url_for('main.cancelzanpost', id=post.id) }}">
-                <span class="iconfont like1">&#xe645;</span></a> <!-- 应用阿里取消赞图标 -->
+                <span class="iconfont like1">&#xe645;</span></a>
 
             </div>
            
             
-            <!-- 将作者的用户名渲染成链接，指向用户的资料页面-->
+            
             <div class="post-author"> 
                 <a href="{{ url_for('main.user', 
                 username=post.author.username)}}">{{ post.author.username }}</a>
             </div>
 
-            <!-- 在模板中使用文章内容的HTML格式-->
+           
             <div class="post-body">
                 {% if post.body_html %}
                     {{ post.body_html | safe }}
@@ -48,20 +47,15 @@
                 {% endif %}
             </div>
            
-            <div class="post-date1"> <!-- 将单条博客的“发布时间”和“阅读量”布置在博客左边下 -->
+            <div class="post-date1">
                 <small>{{ moment(post.timestamp).format('MM-DD') }}</small> &nbsp;
-                <!--
-                <small>
-                  <a href="{{ url_for('main.show_reading', id=post.id) }}">查看阅读量{{ readings }}</a>
-                </small>  
-                -->
             </div> 
 
-            <!-- 在页脚设置评论链接 -->
-            <div class="comment-footer"> <!-- 将单条博客的“评论”布置在博客右边下 -->
-                <!-- 对博客评论的链接 -->
+           
+            <div class="comment-footer">
+              
                 <a href="{{ url_for('main.comment', id=post.id) }}">
-                <span class="iconfont like">&#xe600;</span></a> <!-- 应用阿里评论图标 -->     
+                <span class="iconfont like">&#xe600;</span></a>
             </div>  
 
     </li>

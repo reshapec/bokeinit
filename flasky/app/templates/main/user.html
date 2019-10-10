@@ -3,17 +3,17 @@
 {% block title %}Python自习室 - {{ user.username }}{% endblock %}
 
 
-<!-- 显示有博客文章的用户资料页面模板 -->
+
 {% block page_content %}
 
     <div class="page-header">
         <h4>个人资料</h4>
     </div>
 
-    <!-- 在资料页面增加头像 -->
+    
     <img class="img-rounded profile-thumbnail_big" src="{{ url_for('static', filename=user.avatar_hash) }}" alt="头像" />
     
-    <!-- 在资料页面增加更换头像的链接 -->
+  
     <div class="change_avar">
         {% if user == current_user %}
             <a class="change_avar" href="{{ url_for('main.upload_file') }}">更换头像</a>
@@ -21,13 +21,13 @@
     </div>
 
     <div class="profile-header">
-        <!-- 设置关注链接、以及链接的样式 -->
+       
         <a class="status" href="{{ url_for('main.idols', username=user.username) }}">关注: <span class="badge">{{ user.followed.count() - 1 }}</span></a>
 
-        <!-- 设置粉丝链接、以及链接的样式 -->
+     
         <a class="status" href="{{ url_for('main.fans', username=user.username) }}">粉丝: <span         class="badge">{{ user.followers.count() - 1 }}</span></a>
 
-        <!-- 在资料页面增加关注和取消关注的链接 -->
+        
         {% if current_user.can(Permission.FOLLOW) and user != current_user %}
           {% if not current_user.is_following(user) %}
             <a href="{{ url_for('main.follow', username=user.username) }}">     
@@ -40,12 +40,12 @@
         <br />
         <hr />
 
-        <!-- 普通用户使用的资料编辑页面的链接 -->
+       
         {% if user == current_user %}
           <a class="change_profile" href="{{ url_for('main.edit_profile') }}">修改资料</a>
         {% endif %}
 
-        <!-- 管理员使用的资料编辑页面的链接 -->
+       
         {% if current_user.is_administrator() %}
           <a class="change_profile" href="{{ url_for ('main.edit_profile_admin', 
           id=user.id) }}">修改资料[Admin]</a>
@@ -83,12 +83,4 @@
     
 {% endblock %}
 
-
-<!-- 
-url链接和加载静态文件
-url链接：
-1、语法：url_for('static',filename='路径')
-2、静态文件，flask会从static文件夹中开始寻找，所以不需要再写static这个路径
-3、示例：url_for('static', filename='images/' + 20190825162146.jpg) 
--->
 

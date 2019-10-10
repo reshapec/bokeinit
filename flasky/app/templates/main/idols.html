@@ -8,11 +8,11 @@
     <h4><small>他的{{ title }}</small></h4>
 </div>
 
-<!-- 两列表格， 左边一列显示偶像的用户名和头像，右边一列显示时间戳 -->
+
 <table class="table table-hover idolers">
     <thead><tr><th class="fancy">User</th><th class="fancy">Since</th></tr></thead>
     {% for idol in idols %}
-    {% if idol.user != user %} <!-- 不在偶像队伍显示自己 -->
+    {% if idol.user != user %}
     <tr>
         <td class="orange">
             <a class="status" href="{{ url_for('main.user', username = idol.user.username) }}">

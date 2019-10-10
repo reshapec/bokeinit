@@ -4,6 +4,6 @@
 
 from flask import Blueprint
 
-auth = Blueprint('auth', __name__) # 蓝本auth通过实例化一个Blueprint类创建
+auth = Blueprint('auth', __name__)
 
-from . import views # 从当前包中导入views模块，将路由与蓝本关联起来
+from . import views

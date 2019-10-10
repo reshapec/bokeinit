@@ -1,3 +1,0 @@
--r common.txt
-Pillow==3.1.2
-Faker==2.0.1
